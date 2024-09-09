@@ -175,6 +175,11 @@ __assert_func(const char *file, int line, const char *func, const char *e)
     /* Stop MTB if implemented so interrupt handler execution is not recorded */
     mtb_stop();
 
+#if MYNEWT_VAL(BLE_CONTROLLER)
+    extern void ble_ll_assert(const char *file, unsigned line) __attribute((noreturn));
+    ble_ll_assert(file, line);
+#endif
+
     OS_ENTER_CRITICAL(sr);
     (void)sr;
     console_blocking_mode();
