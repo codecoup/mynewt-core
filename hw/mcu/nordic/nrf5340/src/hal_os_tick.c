@@ -29,7 +29,11 @@
     #error The OS scheduler requires a low-frequency timer; configure MCU_LFCLK_SOURCE
 #endif
 
-#define RTC_FREQ            32768       /* in Hz */
+#if MYNEWT_VAL_CHOICE(MCU_LFCLK_SOURCE, LFXO)
+#define RTC_FREQ            (MYNEWT_VAL(MCU_LFXO_FREQ))
+#else
+#define RTC_FREQ            (32768) /* Hz */
+#endif
 #define OS_TICK_TIMER       NRF_RTC1
 #define OS_TICK_IRQ         RTC1_IRQn
 #define OS_TICK_CMPREG      3

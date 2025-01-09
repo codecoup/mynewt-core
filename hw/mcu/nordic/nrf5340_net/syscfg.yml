@@ -49,6 +49,11 @@ syscfg.defs:
             - LFXO      # 32.768 kHz crystal oscillator
             - LFSYNTH   # 32.768 kHz synthesized from HFCLK
 
+    MCU_LFXO_FREQ:
+        description: >
+            Frequency of LFXO oscillator.
+        value: 32768
+
     MCU_GPIO_USE_PORT_EVENT:
         description: >
             When enabled, hal_gpio will use GPIOTE PORT event instead of PIN

@@ -65,6 +65,11 @@ syscfg.defs:
             - c7pf      # 7pF internal load capacitance
             - c9pf      # 9pF internal load capacitance
 
+    MCU_LFXO_FREQ:
+        description: >
+            Frequency of LFXO oscillator.
+        value: 32768
+
     MCU_HFXO_INTCAP:
         description: >
             Control usage of internal load capacitors for 32 MHz crystal

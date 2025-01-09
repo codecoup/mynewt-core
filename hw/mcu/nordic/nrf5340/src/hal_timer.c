@@ -43,6 +43,12 @@ typedef void (*hal_timer_irq_handler_t)(void);
 /* Maximum timer frequency */
 #define NRF5340_MAX_TIMER_FREQ    (16000000)
 
+#if MYNEWT_VAL_CHOICE(MCU_LFCLK_SOURCE, LFXO)
+#define LFCLK_FREQ              (MYNEWT_VAL(MCU_LFXO_FREQ))
+#else
+#define LFCLK_FREQ              (32768) /* Hz */
+#endif
+
 struct nrf5340_hal_timer {
     uint8_t tmr_enabled;
     uint8_t tmr_irq_num;
@@ -539,8 +545,8 @@ hal_timer_config(int timer_num, uint32_t freq_hz)
 
 #if (MYNEWT_VAL(TIMER_3) || MYNEWT_VAL(TIMER_4))
     if ((timer_num == 3) || (timer_num == 4)) {
-        /* NOTE: we only allow the RTC frequency to be set at 32768 */
-        if (bsptimer->tmr_enabled || (freq_hz != 32768) ||
+        /* NOTE: we only allow the RTC frequency to be set to LFCLK freq */
+        if (bsptimer->tmr_enabled || (freq_hz != LFCLK_FREQ) ||
             (bsptimer->tmr_reg == NULL)) {
             rc = EINVAL;
             goto err;
